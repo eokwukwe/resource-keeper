@@ -1,10 +1,14 @@
 
 
+// const cors = require('cors')
 const express = require('express');
-const app = express();
+
 const bodyParser = require('body-parser');
 const Resource = require('./db/models/resource');
 
+const app = express()
+
+// app.use(cors())
 app.use(bodyParser.json());
 
 app.get('/api/test', (req, res) => {

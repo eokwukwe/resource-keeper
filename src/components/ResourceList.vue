@@ -26,7 +26,7 @@ export default {
       default: () => [],
     },
     activeId: {
-      type: String,
+      validator: (prop) => typeof prop === "string" || prop === undefined,
       required: true,
     },
   },

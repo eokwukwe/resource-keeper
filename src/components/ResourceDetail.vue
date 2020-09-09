@@ -10,9 +10,9 @@
     <div class="card-body">
       <blockquote class="blockquote mb-0">
         <p>{{resource.description}}</p>
-        <footer class="text-muted mb-2">{{resource.type}}</footer>
+        <footer class="badge badge-secondary text-lowercase mb-3 type">{{resource.type}}</footer>
       </blockquote>
-      <a href="#" class="btn btn-sm btn-primary text-uppercase">Edit</a>
+      <a href="#" class="btn btn-sm btn-primary btn-block w-50 text-uppercase">Edit</a>
     </div>
   </div>
 </template>
@@ -30,5 +30,8 @@ export default {
 };
 </script>
 
-<style>
+<style  lang="scss" scoped>
+.type {
+  font-size: 0.75rem !important;
+}
 </style>

@@ -6,7 +6,7 @@
       <div class="col-md-6 order-md-2 mb-sm-5">
         <h4 class="d-flex align-items-center mb-3">
           <span class="text-muted">Your Resources</span>
-          <span class="badge badge-secondary badge-pill ml-2">{{resourcesLength}}</span>
+          <span class="badge badge-secondary count ml-2 mt-1">{{resourcesLength}}</span>
         </h4>
 
         <!-- {/* Resource Search Inputs */} -->
@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import { fetchResources } from "@/actions";
 import ResourceList from "@/components/ResourceList";
 import ResourceHeader from "@/components/ResourceHeader";
 import ResourceSearch from "@/components/ResourceSearch";
@@ -60,30 +61,13 @@ export default {
     return {
       isDetailView: true,
       selectedResource: null,
-      resources: [
-        {
-          _id: "1",
-          title: "resource one title",
-          description: "resource one description",
-          type: "book",
-          link: "",
-        },
-        {
-          _id: "2",
-          title: "resource two title",
-          description: "resource two description",
-          type: "video",
-          link: "",
-        },
-        {
-          _id: "3",
-          title: "resource three title",
-          description: "resource three description",
-          type: "audio book",
-          link: "",
-        },
-      ],
+      resources: [],
     };
+  },
+
+  async created() {
+    const { data } = await fetchResources();
+    this.resources = data;
   },
 
   computed: {
@@ -134,5 +118,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped lang="scss">
+.count {
+  font-size: 0.75rem !important;
+}
 </style>
