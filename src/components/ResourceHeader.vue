@@ -1,5 +1,5 @@
 <template>
-  <div class="py-5 text-center">
+  <div class="pt-3 pb-2 text-center">
     <div class="mx-auto">
       <img height="100" width="100" src="../assets/logo.png" alt="">
     </div>
