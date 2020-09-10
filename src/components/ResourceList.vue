@@ -46,7 +46,7 @@ export default {
 
 <style lang="scss" scoped>
 .resource-list {
-  max-height: 200px;
+  max-height: 250px;
   overflow-y: auto;
 
   &-item {

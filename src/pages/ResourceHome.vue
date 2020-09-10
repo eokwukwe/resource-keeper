@@ -3,7 +3,7 @@
     <resource-header></resource-header>
 
     <div class="row">
-      <div class="col-md-6 order-md-2 mb-sm-5">
+      <div class="col-md-6 order-md-2 mb-5">
         <h4 class="d-flex align-items-center mb-3">
           <span class="text-muted">Your Resources</span>
           <span class="badge badge-secondary count ml-2 mt-1">{{resourcesLength}}</span>
@@ -32,7 +32,7 @@
           >{{isDetailView ? 'update' : 'detail'}}</button>
         </h4>
         <resource-detail v-if="isDetailView" :resource="activeResource" />
-        <resource-update v-else></resource-update>
+        <resource-update v-else :resource="activeResource" @on-resource-update="hydrateResources" />
       </div>
     </div>
   </div>
@@ -66,7 +66,7 @@ export default {
   },
 
   async created() {
-    const { data } = await fetchResources();
+    const data = await fetchResources();
     this.resources = data;
   },
 
@@ -113,6 +113,12 @@ export default {
 
     selectResource(resource) {
       this.selectedResource = resource;
+    },
+
+    hydrateResources(newResource) {
+      const index = this.resources.findIndex((r) => r._id === newResource._id);
+      this.resources[index] = newResource;
+      this.selectResource(newResource);
     },
   },
 };
