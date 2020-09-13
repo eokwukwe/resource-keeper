@@ -1,12 +1,8 @@
 <template>
   <form @submit.prevent="submitUpdate">
-    <div v-if="alert?.success" class="alert alert-success">
-      {{alert.success}}
-    </div>
-     
-    <div v-if="alert?.error" class="alert alert-danger">
-      {{alert.error}}
-    </div>
+    <div v-if="alert?.success" class="alert alert-success">{{alert.success}}</div>
+
+    <div v-if="alert?.error" class="alert alert-danger">{{alert.error}}</div>
 
     <div class="mb-3">
       <label for="title">Title</label>
@@ -14,7 +10,7 @@
         type="text"
         class="form-control form-control-sm"
         id="title"
-        v-model="newResource.title"
+        v-model="resourceToUpate.title"
         placeholder="How to survice in mountains"
       />
     </div>
@@ -23,7 +19,7 @@
       <textarea
         class="form-control form-control-sm"
         id="description"
-        v-model="newResource.description"
+        v-model="resourceToUpate.description"
         placeholder="Just some description"
       ></textarea>
     </div>
@@ -32,7 +28,7 @@
         Resource Type
         <!-- <span class="text-muted">(Optional)</span> -->
       </label>
-      <select class="form-control form-control-sm" id="type" v-model="newResource.type">
+      <select class="form-control form-control-sm" id="type" v-model="resourceToUpate.type">
         <option
           v-for="(resourceType, i) in types"
           :key="i"
@@ -48,7 +44,7 @@
           type="text"
           class="form-control form-control-sm"
           id="link"
-          v-model="newResource.link"
+          v-model="resourceToUpate.link"
           placeholder="http://www.link.com"
         />
       </div>
@@ -60,6 +56,7 @@
 
 <script>
 import { updateResource } from "@/actions";
+import alertMixin from '@/mixins/alert.mixin'
 
 export default {
   name: "ResourceUpdate",
@@ -73,40 +70,35 @@ export default {
 
   data() {
     return {
-      newResource: { ...this.resource },
+      resourceToUpate: { ...this.resource },
       types: ["blog", "book", "video", "audio", "audio book"],
-      alert: {
-        success: null,
-        error: null,
-      },
     };
   },
 
+  mixins: [alertMixin],
+
   emits: ["on-resource-update"],
 
+  beforeUnmount() {
+    this.clearAlertTimeout();
+  },
+
   watch: {
-    resource(resource) {
-      this.newResource = { ...resource };
+    resource(newResource, prevResource) {
+      if (newResource && newResource._id !== prevResource._id) {
+        this.clearAlertTimeout();
+        this.alert = this.initAlert();
+      }
+      this.resourceToUpate = { ...newResource };
     },
   },
 
   methods: {
-    initAlert() {
-      return { success: null, error: null };
-    },
-    setAlert(type, message) {
-      this.alert = this.initAlert();
-      this.alert[type] = message;
-
-      setTimeout(() => {
-        this.alert = this.initAlert()
-      }, 5000)
-    },
     async submitUpdate() {
       try {
         const updated = await updateResource(
-          this.newResource._id,
-          this.newResource
+          this.resourceToUpate._id,
+          this.resourceToUpate
         );
 
         this.$emit("on-resource-update", updated);

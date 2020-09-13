@@ -6,7 +6,14 @@ export function fetchResources() {
 
 export function updateResource(id, resource) {
   return axios
-    .patch(`/api/resources/${id}sssssss`, resource)
+    .patch(`/api/resources/${id}`, resource)
+    .then(res => res.data)
+    .catch(error => Promise.reject(error?.response?.data))
+}
+
+export function deleteResourceApi(id) {
+  return axios
+    .delete(`/api/resources/${id}`)
     .then(res => res.data)
     .catch(error => Promise.reject(error?.response?.data))
 }

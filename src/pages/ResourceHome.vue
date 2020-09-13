@@ -19,20 +19,38 @@
           :activeId="activeResource?._id"
         />
 
-        <button @click="addResource" class="btn btn-sm btn-primary text-uppercase">add resource</button>
+        <!-- <button 
+          @click="addResource" 
+          class="btn btn-sm btn-primary text-uppercase"
+        >
+          add resource
+        </button> -->
       </div>
 
       <!-- {/* Detail View Starts */} -->
       <div class="col-md-6 order-md-1">
         <h4 class="mb-3">
           Resource {{activeResource?._id}}
-          <button
-            @click="toggleView"
-            :class="`btn btn-sm text-uppercase ${toggleBtnClass}`"
-          >{{isDetailView ? 'update' : 'detail'}}</button>
+
+          <template v-if="hasResources">
+            <button
+              @click="toggleView"
+              :class="`btn btn-sm text-uppercase mr-2 ${toggleBtnClass}`"
+            >
+              {{isDetailView ? 'update' : 'detail'}}
+            </button>
+
+            <resource-delete 
+              :activeId="activeResource?._id"          @on-resource-delete="hydrateResources($event, 'delete'); !hasResources ? isDetailView = true : null"
+            />
+          </template>
         </h4>
+
         <resource-detail v-if="isDetailView" :resource="activeResource" />
-        <resource-update v-else :resource="activeResource" @on-resource-update="hydrateResources" />
+
+        <resource-update 
+          v-else :resource="activeResource" @on-resource-update="hydrateResources($event, 'update')" 
+        />
       </div>
     </div>
   </div>
@@ -44,6 +62,7 @@ import ResourceList from "@/components/ResourceList";
 import ResourceHeader from "@/components/ResourceHeader";
 import ResourceSearch from "@/components/ResourceSearch";
 import ResourceUpdate from "@/components/ResourceUpdate";
+import ResourceDelete from "@/components/ResourceDelete";
 import ResourceDetail from "@/components/ResourceDetail";
 
 export default {
@@ -55,6 +74,7 @@ export default {
     ResourceSearch,
     ResourceDetail,
     ResourceUpdate,
+    ResourceDelete,
   },
 
   data() {
@@ -79,13 +99,13 @@ export default {
       return this.isDetailView ? "btn-success" : "btn-info";
     },
 
-    hasResource() {
+    hasResources() {
       return this.resourcesLength > 0;
     },
 
     activeResource() {
       return (
-        this.selectedResource || (this.hasResource && this.resources[0]) || null
+        this.selectedResource || (this.hasResources && this.resources[0]) || null
       );
     },
   },
@@ -95,30 +115,22 @@ export default {
       this.isDetailView = !this.isDetailView;
     },
 
-    addResource() {
-      const _id = `_${Math.random().toString(36).slice(2)}`;
-      const type = ["book", "blog", "video", "audo book"][
-        Math.floor(Math.random() * 4)
-      ];
-      const newResource = {
-        _id,
-        type,
-        title: `Resource ${_id} title`,
-        description: `Resource ${_id} description`,
-        link: "",
-      };
-
-      this.resources.push(newResource);
-    },
-
     selectResource(resource) {
       this.selectedResource = resource;
     },
 
-    hydrateResources(newResource) {
+    hydrateResources(newResource, operation) {
       const index = this.resources.findIndex((r) => r._id === newResource._id);
-      this.resources[index] = newResource;
-      this.selectResource(newResource);
+      
+      if (operation === 'update') {
+        this.resources[index] = newResource
+
+        this.selectResource(newResource)
+      } else {
+        this.resources.splice(index, 1)
+
+        this.selectResource(this.resources[0] || null)
+      }
     },
   },
 };
