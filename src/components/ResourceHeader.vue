@@ -1,7 +1,7 @@
 <template>
   <div class="pt-3 pb-2 text-center">
     <div class="mx-auto">
-      <img height="100" width="100" src="../assets/logo.png" alt="">
+      <img height="85" width="85" src="../assets/logo.png" alt="">
     </div>
     
     <h2>Keep Resources</h2>

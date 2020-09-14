@@ -1,18 +1,20 @@
 <template>
-  <div id="app">
-    <resource-home></resource-home>
+  <div id="app" class="container pb-5">
+    <resource-header />
+    <router-view />
   </div>
 </template>
 
 <script>
-import ResourceHome from "./pages/ResourceHome";
+import ResourceHeader from '@/components/ResourceHeader'
+
 
 export default {
   name: "App",
 
   components: {
-    ResourceHome,
-  },
+    ResourceHeader
+  }
 };
 </script>
 

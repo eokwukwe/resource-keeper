@@ -1,7 +1,4 @@
 <template>
-  <div class="container pb-5">
-    <resource-header></resource-header>
-
     <div class="row">
       <div class="col-md-6 order-md-2 mb-5">
         <h4 class="d-flex align-items-center mb-3">
@@ -53,13 +50,11 @@
         />
       </div>
     </div>
-  </div>
 </template>
 
 <script>
 import { fetchResources } from "@/actions";
 import ResourceList from "@/components/ResourceList";
-import ResourceHeader from "@/components/ResourceHeader";
 import ResourceSearch from "@/components/ResourceSearch";
 import ResourceUpdate from "@/components/ResourceUpdate";
 import ResourceDelete from "@/components/ResourceDelete";
@@ -70,7 +65,6 @@ export default {
 
   components: {
     ResourceList,
-    ResourceHeader,
     ResourceSearch,
     ResourceDetail,
     ResourceUpdate,
