@@ -8,10 +8,11 @@
   },
   {
     "_id": "2",
-    "title": "Updated Title again",
-    "description": "Some Desc UPDATE",
+    "title": "Resource TItle",
+    "description": "Resource descriptions updated",
     "link": "https://eincode.com/blogs/learn-how-to-validate-custom-input-components-with-react-hook-form",
-    "type": "blog"
+    "type": "book",
+    "resource": "resources"
   },
   {
     "_id": "3",
