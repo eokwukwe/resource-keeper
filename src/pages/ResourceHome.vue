@@ -29,7 +29,7 @@
 
           <resource-delete
             :activeId="activeResource?._id"
-            @on-resource-delete="hydrateResources($event, 'delete'); !hasResources ? isDetailView = true : null"
+            @on-resource-delete="handleResourceChange($event, 'delete'); !hasResources ? isDetailView = true : null"
           />
         </template>
       </h4>
@@ -47,14 +47,17 @@
       <resource-update
         v-else
         :resource="activeResource"
-        @on-resource-update="hydrateResources($event, 'update')"
+        @on-resource-update="handleResourceChange($event, 'update')"
       />
     </div>
   </div>
 </template>
 
 <script>
-  import { fetchResources, searchResourcesApi } from "@/actions";
+  // import { searchResourcesApi } from "@/actions";
+
+  import useResources from "@/composition/useResources";
+
   import ResourceList from "@/components/ResourceList";
   import ResourceSearch from "@/components/ResourceSearch";
   import ResourceUpdate from "@/components/ResourceUpdate";
@@ -76,25 +79,16 @@
       return {
         isDetailView: true,
         selectedResource: null,
-        resources: [],
       };
     },
 
-    created() {
-      this.getResources();
+    setup() {
+      return { ...useResources() };
     },
 
     computed: {
-      resourcesLength() {
-        return this.resources.length;
-      },
-
       toggleBtnClass() {
         return this.isDetailView ? "btn-success" : "btn-info";
-      },
-
-      hasResources() {
-        return this.resourcesLength > 0;
       },
 
       activeResource() {
@@ -107,11 +101,6 @@
     },
 
     methods: {
-      async getResources() {
-        const resources = await fetchResources();
-        this.resources = resources;
-      },
-
       toggleView() {
         this.isDetailView = !this.isDetailView;
       },
@@ -120,26 +109,18 @@
         this.selectedResource = resource;
       },
 
-      hydrateResources(newResource, operation) {
-        const index = this.resources.findIndex((r) => r._id === newResource._id);
-
-        if (operation === "update") {
-          this.resources[index] = newResource;
-
-          this.selectResource(newResource);
-        } else {
-          this.resources.splice(index, 1);
-
-          this.selectResource(this.resources[0] || null);
-        }
+      handleResourceChange(newResource, operation) {
+        this.hydrateResources(newResource, operation, this.selectResource);
       },
 
       async handleSearch(title) {
         if (!title) {
           this.getResources();
-          return
+          return;
         }
-        this.resources = await searchResourcesApi(title);
+
+        this.setSearchQuery(title);
+
         this.selectedResource = null;
       },
     },
