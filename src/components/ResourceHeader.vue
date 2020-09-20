@@ -1,13 +1,15 @@
 <template>
   <div class="pt-3 pb-2 mb-4 text-center">
-    <div class="user-container">
-      <suspense>
-        <template #default>
-          <user-panel />
-        </template>
-        <template #fallback>Loading....</template>
-      </suspense>
-    </div>
+    <teleport to='#teleportContent'>
+      <div class="user-container">
+        <suspense>
+          <template #default>
+            <user-panel />
+          </template>
+          <template #fallback>Loading....</template>
+        </suspense>
+      </div>
+    </teleport>
 
     <div class="mx-auto">
       <img
@@ -34,17 +36,18 @@
 </template>
 
 <script>
-import UserPanel from '@/components/UserPanel'
+  import UserPanel from "@/components/UserPanel";
 
   export default {
     name: "ResourceHeader",
 
-     components: { UserPanel }
+    components: { UserPanel },
   };
 </script>
 
 <style scoped>
   .user-container {
+    text-align: center;
     padding: 5px;
     font-weight: bold;
     font-size: 20px;
