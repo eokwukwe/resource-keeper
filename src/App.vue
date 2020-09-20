@@ -1,23 +1,26 @@
 <template>
-  <div id="app" class="container pb-5">
+  <div id="teleportContent"></div>
+  <div
+    id="app"
+    class="container pb-5"
+  >
     <resource-header />
     <router-view />
   </div>
 </template>
 
 <script>
-import ResourceHeader from '@/components/ResourceHeader'
+  import ResourceHeader from "@/components/ResourceHeader";
 
+  export default {
+    name: "App",
 
-export default {
-  name: "App",
-
-  components: {
-    ResourceHeader
-  }
-};
+    components: {
+      ResourceHeader,
+    },
+  };
 </script>
 
 <style>
-@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+  @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 </style>
