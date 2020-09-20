@@ -10,7 +10,7 @@
 
   <div
     v-else
-    class="card"
+    :class="`card ${getTheme()}`"
   >
     <div class="card-header text-capitalize">{{resource.title}}</div>
     <div class="card-body">
@@ -25,9 +25,7 @@
           target="_blank"
           :href="resource.link"
           class="btn btn-sm btn-outline-info text-capitalize"
-        >
-          Resource Link
-        </a>
+        >Resource Link</a>
 
         <slot></slot>
       </div>
@@ -45,11 +43,17 @@
         required: true,
       },
     },
+
+    inject: ["getTheme"],
   };
 </script>
 
 <style  lang="scss" scoped>
   .type {
     font-size: 0.75rem !important;
+  }
+
+  .card.dark {
+    color: black !important;
   }
 </style>

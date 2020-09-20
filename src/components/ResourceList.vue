@@ -1,5 +1,5 @@
 <template>
-  <ul class="list-group resource-list mb-3">
+  <ul :class="`list-group resource-list mb-3 ${getTheme()}`">
     <li
       v-for="resource in resources"
       :key="resource._id"
@@ -16,50 +16,56 @@
 </template>
 
 <script>
-export default {
-  name: "ResourceList",
+  export default {
+    name: "ResourceList",
 
-  props: {
-    resources: {
-      type: Array,
-      required: true,
-      default: () => [],
+    props: {
+      resources: {
+        type: Array,
+        required: true,
+        default: () => [],
+      },
+      activeId: {
+        validator: (prop) => typeof prop === "string" || prop === undefined,
+        required: true,
+      },
     },
-    activeId: {
-      validator: (prop) => typeof prop === "string" || prop === undefined,
-      required: true,
-    },
-  },
 
-  emit: ["on-resource-click"],
+    emit: ["on-resource-click"],
 
-  methods: {
-    onResourceClick(resource) {
-      this.$emit("on-resource-click", resource);
+    inject: ["getTheme"],
+
+    methods: {
+      onResourceClick(resource) {
+        this.$emit("on-resource-click", resource);
+      },
+      activeItemClass(resource) {
+        return resource._id === this.activeId ? "is-active" : "";
+      },
     },
-    activeItemClass(resource) {
-      return resource._id === this.activeId ? "is-active" : "";
-    },
-  },
-};
+  };
 </script>
 
 <style lang="scss" scoped>
-.resource-list {
-  max-height: 250px;
-  overflow-y: auto;
+  .resource-list {
+    max-height: 250px;
+    overflow-y: auto;
 
-  &-item {
-    cursor: pointer;
+    &.dark {
+      color: black;
+    }
 
-    &:hover {
-      background-color: #f3f3f3;
+    &-item {
+      cursor: pointer;
+
+      &:hover {
+        background-color: #f3f3f3;
+      }
     }
   }
-}
 
-.is-active {
-  background-color: #f3f3f3;
-}
+  .is-active {
+    background-color: #f3f3f3;
+  }
 </style>
 

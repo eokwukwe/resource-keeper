@@ -1,6 +1,6 @@
 <template>
   <div class="pt-3 pb-2 mb-4 text-center">
-    <teleport to='#teleportContent'>
+    <teleport to="#teleportContent">
       <div class="user-container">
         <suspense>
           <template #default>
@@ -25,23 +25,26 @@
 
     <router-link
       :to="{name: 'resourceHomePage'}"
-      class="btn btn-outline-primary mr-2"
+      class="btn btn-outline-primary btn-sm mr-2"
     >Home</router-link>
 
     <router-link
       :to="{name: 'resourceNewPage'}"
-      class="btn btn-outline-primary"
+      class="btn btn-outline-primary btn-sm  mr-2"
     >New</router-link>
+
+    <settings-modal />
   </div>
 </template>
 
 <script>
   import UserPanel from "@/components/UserPanel";
+  import SettingsModal from "@/components/SettingsModal";
 
   export default {
     name: "ResourceHeader",
 
-    components: { UserPanel },
+    components: { UserPanel, SettingsModal },
   };
 </script>
 
