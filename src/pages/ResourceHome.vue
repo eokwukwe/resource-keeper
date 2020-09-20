@@ -54,8 +54,6 @@
 </template>
 
 <script>
-  // import { searchResourcesApi } from "@/actions";
-
   import useResources from "@/composition/useResources";
 
   import ResourceList from "@/components/ResourceList";
@@ -114,14 +112,7 @@
       },
 
       async handleSearch(title) {
-        if (!title) {
-          this.getResources();
-          return;
-        }
-
         this.setSearchQuery(title);
-
-        this.selectedResource = null;
       },
     },
   };

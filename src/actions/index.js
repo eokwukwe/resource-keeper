@@ -1,5 +1,11 @@
 import axios from 'axios'
 
+export function fetchUser() {
+  return new Promise(res => {
+    setTimeout(() => res({ name: 'John Doe' }), 2000)
+  })
+}
+
 export async function fetchResources() {
   const res = await axios.get('/api/resources')
   return res.data
