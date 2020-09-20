@@ -1,7 +1,7 @@
 <template>
   <button
     @click="isOpen = true"
-    class="btn btn-dark btn-sm"
+    class="btn btn-secondary btn-sm"
   >Set Theme</button>
   <modal
     :isOpen="isOpen"

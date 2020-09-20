@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export function fetchUser() {
   return new Promise(res => {
-    setTimeout(() => res({ name: 'John Doe' }), 2000)
+    setTimeout(() => res({ name: 'fCode' }), 2000)
   })
 }
 

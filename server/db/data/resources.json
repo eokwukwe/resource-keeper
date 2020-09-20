@@ -7,17 +7,17 @@
     "type": "video"
   },
   {
-    "_id": "2",
-    "title": "Some resources",
-    "description": "Some resources description\n",
-    "link": "https://eincode.com/blogs/learn-how-to-validate-custom-input-components-with-react-hook-form",
-    "type": "blog"
-  },
-  {
     "_id": "3",
     "title": "Setup project from Github",
     "description": "Short guide how to setup a starting project in order to work on my tutorials.",
     "link": "https://eincode.com/blogs/setup-project-from-github-repo",
     "type": "blog"
+  },
+  {
+    "_id": "_cjuy89uz3",
+    "title": "some resource update",
+    "description": "some resource description",
+    "link": "www.newresource.com",
+    "type": "audio"
   }
 ]
